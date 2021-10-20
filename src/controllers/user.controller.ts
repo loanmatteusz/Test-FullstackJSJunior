@@ -41,6 +41,17 @@ class UserController {
     response.status(200).json();
   }
 
+  public async deleteAllUsers(request: Request, response: Response) {
+    await UserService.deleteAllUsers();
+    response.status(200).send();
+  }
+
+  public async deleteUserById(request: Request, response: Response) {
+    const { id } = request.params;
+    await UserService.deleteUserById(id);
+    response.status(200).send();
+  }
+
 }
 
 

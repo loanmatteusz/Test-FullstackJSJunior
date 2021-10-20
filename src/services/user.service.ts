@@ -45,18 +45,35 @@ class UserService {
       return user;
     }
     catch(err: any) {
-      return new ApiError(404, err.detail);
+      return new ApiError(400, err.detail);
     }
   }
 
   public async updateUser({ id, email, password }: IUser) {
     try {
+      const emailIsValid = emailRegex.test(email);
+      if (!emailIsValid) {
+        return new ApiError(400, "This email is invalid.");
+      }
       const hashedPassword = await (new BcryptHash().generateHash(password));
       await connection('users')
-      .update({ email, password: hashedPassword })
+      .update({ email, password: hashedPassword, updated_at: new Date() })
       .where({ id });
     }
     catch (err: any) {
+      return new ApiError(400, err.detail);
+    }
+  }
+
+  public async deleteAllUsers() {
+    await connection('users').del();
+  }
+
+  public async deleteUserById(id: string) {
+    try {
+      await connection('users').where('id', id).del();
+    }
+    catch(err: any) {
       return new ApiError(400, err.detail);
     }
   }
