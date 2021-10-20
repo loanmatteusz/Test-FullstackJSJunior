@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ApiError } from '../errors/api-error';
-import UserService from '../services/user-service';
+import UserService from '../services/user.service';
+
 
 class UserController {
 
@@ -29,7 +30,17 @@ class UserController {
     }
     response.status(201).json();
   }
-  
+
+  public async updateUser(request: Request, response: Response) {
+    const { email, password } = request.body;
+    const { id } = request.params;
+    const updatedUser = await UserService.updateUser({ id, email, password });
+    if (updatedUser instanceof ApiError) {
+      response.status(updatedUser.codeError).json(updatedUser.message);
+    }
+    response.status(200).json();
+  }
+
 }
 
 

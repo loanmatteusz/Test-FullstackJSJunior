@@ -5,12 +5,13 @@ import { emailRegex } from '../utils/validate-email.util';
 
 
 interface IUser {
+  id?: string;
   email: string;
   password: string;
 }
 
 class UserService {
-  
+
   public async createUser({ email, password }: IUser) {
     try {
       const emailIsValid = emailRegex.test(email);
@@ -45,6 +46,18 @@ class UserService {
     }
     catch(err: any) {
       return new ApiError(404, err.detail);
+    }
+  }
+
+  public async updateUser({ id, email, password }: IUser) {
+    try {
+      const hashedPassword = await (new BcryptHash().generateHash(password));
+      await connection('users')
+      .update({ email, password: hashedPassword })
+      .where({ id });
+    }
+    catch (err: any) {
+      return new ApiError(400, err.detail);
     }
   }
 
