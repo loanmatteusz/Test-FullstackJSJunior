@@ -10,7 +10,7 @@ interface IUser {
 }
 
 class UserService {
-
+  
   public async createUser({ email, password }: IUser) {
     try {
       const emailIsValid = emailRegex.test(email);

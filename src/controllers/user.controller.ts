@@ -1,34 +1,36 @@
-import Router from 'express';
+import { Request, Response } from 'express';
 import { ApiError } from '../errors/api-error';
 import UserService from '../services/user-service';
 
-const router = Router();
+class UserController {
 
-router.get('/', async (request, response) => {
-  const users = await UserService.getAllUsers();
-  if (users instanceof ApiError) {
-    response.status(users.codeError).json(users.message);
+  public async getAllUsers(request: Request, response: Response) {
+    const users = await UserService.getAllUsers();
+    if (users instanceof ApiError) {
+      response.status(users.codeError).json(users.message);
+    }
+    response.status(200).json(users);
   }
-  response.status(200).json(users);
-});
 
-router.get('/:id', async (request, response) => {
-  const { id } = request.params;
-  const user = await UserService.getUserById(id);
-  if (user instanceof ApiError) {
-    console.log("akeeeeeee: ", user.message)
-    response.status(user.codeError).json(user.message);
+  public async getUserById(request: Request, response: Response) {
+    const { id } = request.params;
+    const user = await UserService.getUserById(id);
+    if (user instanceof ApiError) {
+      response.status(user.codeError).json(user.message);
+    }
+    response.status(200).json(user);
   }
-  response.status(200).json(user);
-});
 
-router.post('/', async (request, response) => {
-  const { email, password } = request.body;
-  const createdUser = await UserService.createUser({ email, password });
-  if (createdUser instanceof ApiError) {
-    response.status(createdUser.codeError).json(createdUser.message);
+  public async createUser(request: Request, response: Response) {
+    const { email, password } = request.body;
+    const createdUser = await UserService.createUser({ email, password });
+    if (createdUser instanceof ApiError) {
+      response.status(createdUser.codeError).json(createdUser.message);
+    }
+    response.status(201).json();
   }
-  response.status(201).json();
-});
+  
+}
 
-export default router;
+
+export default UserController;

@@ -6,4 +6,5 @@ class BcryptHash {
 	}
 }
 
+
 export default BcryptHash;
