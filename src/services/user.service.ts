@@ -25,7 +25,7 @@ class UserService {
       });
     }
     catch (err: any) {
-      return new ApiError(500, err.detail);
+      return new ApiError(400, err.detail);
     }
   }
 
