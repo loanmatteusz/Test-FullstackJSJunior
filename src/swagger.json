@@ -64,7 +64,7 @@
         },
         "responses": {
           "201": {
-            "description": "OK"
+            "description": "Created"
           },
           "400": {
             "description": "Invalid E-mail or already exists"
@@ -109,7 +109,10 @@
             }
           },
           "400": {
-            "description": "Bad request"
+            "description": "Syntaxe error"
+          },
+          "404": {
+            "description": "User not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -151,6 +154,10 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          
+          "404": {
+            "description": "User not found"
           },
           "500": {
             "description": "Internal Server Error"

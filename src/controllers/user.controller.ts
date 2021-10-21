@@ -48,8 +48,11 @@ class UserController {
 
   public async deleteUserById(request: Request, response: Response) {
     const { id } = request.params;
-    await UserService.deleteUserById(id);
-    response.status(200).send();
+    const userDeleted = await UserService.deleteUserById(id);
+    if (userDeleted instanceof ApiError) {
+      response.status(userDeleted.codeError).json(userDeleted.message);
+    }
+    response.status(200).json({ message: `User ${id} has been deleted` });
   }
 
 }

@@ -42,6 +42,9 @@ class UserService {
   public async getUserById(id: string) {
     try {
       const user = await connection('users').where('id', id);
+      if (user.length === 0) {
+        return new ApiError(404, "User not found");
+      }
       return user;
     }
     catch(err: any) {
@@ -56,9 +59,12 @@ class UserService {
         return new ApiError(400, "This email is invalid.");
       }
       const hashedPassword = await (new BcryptHash().generateHash(password));
-      await connection('users')
+      const userUpdated = await connection('users')
       .update({ email, password: hashedPassword, updated_at: new Date() })
       .where({ id });
+      if (!userUpdated) {
+        return new ApiError(404, "User not found");
+      }
     }
     catch (err: any) {
       return new ApiError(400, err.detail);
