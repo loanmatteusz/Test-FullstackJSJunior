@@ -1,0 +1,5 @@
+root=true
+
+[*]
+charset=utf-8
+and_of_line=lf

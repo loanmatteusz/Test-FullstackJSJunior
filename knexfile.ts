@@ -1,12 +1,14 @@
-interface KnexConfig {
-  [key: string]: object;
+import { Knex } from 'knex';
+
+interface IKnexConfig {
+  [key: string]: Knex.Config;
 };
 
-const knexConfig: KnexConfig = {
+const knexConfig: IKnexConfig = {
   development: {
     client: 'postgresql',
     connection: {
-      host: 'localhost',
+      host: process.env.DB_HOST || "localhost",
       port: 5432,
       user: 'postgres',
       database: 'fullstackjr-database',
