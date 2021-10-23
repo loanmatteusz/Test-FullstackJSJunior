@@ -14,7 +14,7 @@ $ docker-compose up
 ## Swagger Route
 
 ```bash
-# up app and database with docker
+# route to use swagger doc
 $ http://localhost:3000/docs
 ```
 
