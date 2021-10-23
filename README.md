@@ -11,6 +11,13 @@ $ yarn
 $ docker-compose up
 ```
 
+## Swagger Route
+
+```bash
+# up app and database with docker
+$ http://localhost:3000/docs
+```
+
 ---
 
 # Contele fullstack-junior
